@@ -34,7 +34,7 @@ UserModel.init(
       allowNull: false,
       defaultValue: false,
     },
-    localPassword: {
+    password: {
       type: DataTypes.STRING,
       allowNull: true,
     },

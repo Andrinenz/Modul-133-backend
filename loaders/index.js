@@ -5,6 +5,8 @@
 import express from 'express';
 import expressLoader from './express-loader.js';
 import sequelizeLoader from './sequelize-loader.js';
+import routesLoader from './routes-loader.js';
+import passportLoader from './passport-loader.js';
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -26,6 +28,12 @@ const initLoaders = async (app) => {
 
   await expressLoader(app);
   console.log('Express loaded sucessfully');
+
+  await passportLoader(app);
+  console.log('Passport loaded sucessfully');
+
+  await routesLoader(app);
+  console.log('Routes loaded successfully');
 };
 
 /*-------------------------------------------------------------*/
