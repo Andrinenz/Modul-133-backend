@@ -2,8 +2,8 @@
 /*IMPORTS*/
 /*-------------------------------------------------------------*/
 
-import config from './config/index.js';
-import start from './loaders/index.js';
+import '../db/associations.js';
+import sequelize from '../db/sequelize.js';
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -13,14 +13,22 @@ import start from './loaders/index.js';
 /*MAIN*/
 /*-------------------------------------------------------------*/
 
-const startServer = async () => {
-  const app = await start();
-  app.listen(config.express.port, (err) => {
-    if (err) return console.log(err);
-    console.log('Server started on Port:', config.express.port);
-  });
+export default async () => {
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync(); //{alter:true} or {force:true}
+  } catch (error) {
+    if (error?.original?.routine === 'auth_failed') {
+      throw new Error('Unable to connect to the database: \n' + error);
+    }
+    if (error?.original?.routine === 'DefineEnum') {
+      return console.log(
+        "Error DefineEnum: error sync fail, enum can't be defined (this is a known issue in postgres)"
+      );
+    }
+    console.log(error);
+  }
 };
-startServer();
 
 /*-------------------------------------------------------------*/
 /*EXPORTS*/

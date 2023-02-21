@@ -2,26 +2,33 @@
 /*IMPORTS*/
 /*-------------------------------------------------------------*/
 
-import config from './config/index.js';
-import start from './loaders/index.js';
+import express from 'express';
+import expressLoader from './express-loader.js';
+import sequelizeLoader from './sequelize-loader.js';
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
 /*-------------------------------------------------------------*/
+const app = express();
 
 /*-------------------------------------------------------------*/
 /*MAIN*/
 /*-------------------------------------------------------------*/
 
-const startServer = async () => {
-  const app = await start();
-  app.listen(config.express.port, (err) => {
-    if (err) return console.log(err);
-    console.log('Server started on Port:', config.express.port);
-  });
+const start = async () => {
+  await initLoaders(app);
+  return app;
 };
-startServer();
+
+const initLoaders = async (app) => {
+  await sequelizeLoader(app);
+  console.log('Sequelize loaded sucessfully');
+
+  await expressLoader(app);
+  console.log('Express loaded sucessfully');
+};
 
 /*-------------------------------------------------------------*/
 /*EXPORTS*/
 /*-------------------------------------------------------------*/
+export default start;
