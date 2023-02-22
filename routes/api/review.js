@@ -43,7 +43,8 @@ router.post(
       comment: Joi.string(),
       ItemId: Joi.number().required(),
     }),
-  })
+  }),
+  controller.createRating
 );
 
 router.patch(
@@ -71,3 +72,4 @@ router.delete(
 /*-------------------------------------------------------------*/
 /*EXPORTS*/
 /*-------------------------------------------------------------*/
+export default router;

@@ -5,6 +5,8 @@
 import authRouter from './api/auth.js';
 import itemRouter from './api/item.js';
 import orderRouter from './api/order.js';
+import ratingRouter from './api/review.js';
+import userRouter from './api/user.js';
 import passport from '../auth/passport-jwt.js';
 
 /*-------------------------------------------------------------*/
@@ -28,6 +30,18 @@ const init = (app) => {
     '/api/order',
     passport.authenticate('jwt', { session: false }),
     orderRouter
+  );
+
+  app.use(
+    '/api/rating',
+    passport.authenticate('jwt', { session: false }),
+    ratingRouter
+  );
+
+  app.use(
+    '/api/user',
+    passport.authenticate('jwt', { session: false }),
+    userRouter
   );
 };
 

@@ -18,7 +18,9 @@ const getAllRatings = async (req, res) => {
   try {
     let ratings = [];
 
-    ratings = await ReviewModel.findAll({});
+    ratings = await ReviewModel.findAll({
+      include: [ItemModel, models.userModel],
+    });
     res.status(200).json({ result: ratings });
   } catch (err) {
     res.status(500).json({ error: err });
@@ -50,7 +52,12 @@ const createRating = async (req, res) => {
       include: [models.userModel, ItemModel],
     });
 
-    res.status(201).json({ result: rating });
+    let ratingWithUser = await ReviewModel.findOne({
+      where: { id: rating.id },
+      include: [models.userModel, ItemModel],
+    });
+
+    res.status(201).json({ result: ratingWithUser });
   } catch (err) {
     res.status(500).json({ error: err });
   }

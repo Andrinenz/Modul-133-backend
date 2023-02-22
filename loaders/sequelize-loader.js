@@ -3,6 +3,7 @@
 /*-------------------------------------------------------------*/
 
 import '../db/associations.js';
+import { loadDefaultValues } from '../db/defaultValues.js';
 import sequelize from '../db/sequelize.js';
 
 /*-------------------------------------------------------------*/
@@ -17,6 +18,7 @@ export default async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync(); //{alter:true} or {force:true}
+    await loadDefaultValues();
   } catch (error) {
     if (error?.original?.routine === 'auth_failed') {
       throw new Error('Unable to connect to the database: \n' + error);

@@ -17,7 +17,7 @@ import generateJWT from '../services/generateJWT.js';
 const login = async (req, res) => {
   let user = req.user;
   delete user.token;
-  delete user.localPassword;
+  delete user.password;
 
   let newJWT = await generateJWT(user);
   await UserModel.update(

@@ -29,6 +29,14 @@ UserModel.init(
       allowNull: false,
       unique: true,
     },
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

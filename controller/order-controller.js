@@ -4,7 +4,6 @@
 
 import ItemModel from '../db/models/item-model.js';
 import OrderModel from '../db/models/order-model.js';
-import UserModel from '../db/models/user-model.js';
 import { models } from '../db/associations.js';
 
 /*-------------------------------------------------------------*/
@@ -54,7 +53,12 @@ const createOrder = async (req, res) => {
       include: [models.userModel, ItemModel],
     });
 
-    res.status(201).json({ result: order });
+    let orderWithUser = await OrderModel.findOne({
+      where: { id: order.id },
+      include: [models.userModel, ItemModel],
+    });
+
+    res.status(201).json({ result: orderWithUser });
   } catch (err) {
     res.status(500).json({ error: err });
   }
