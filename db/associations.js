@@ -16,6 +16,13 @@ import OrderModel from './models/order-model.js';
 /*MAIN*/
 /*-------------------------------------------------------------*/
 
+export const models = {
+  userModel: {
+    model: UserModel,
+    attributes: { exclude: ['token', 'password'] },
+  },
+};
+
 ItemModel.hasMany(ReviewModel);
 ReviewModel.belongsTo(ItemModel);
 

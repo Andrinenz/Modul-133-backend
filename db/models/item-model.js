@@ -38,10 +38,6 @@ ItemModel.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     itemsInStock: {
       type: DataTypes.STRING,
       allowNull: false,

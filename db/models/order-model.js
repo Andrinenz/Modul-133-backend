@@ -54,6 +54,10 @@ OrderModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    sentToShippingCompany: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,
