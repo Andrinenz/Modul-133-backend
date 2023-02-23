@@ -15,18 +15,28 @@ import generateJWT from '../services/generateJWT.js';
 /*-------------------------------------------------------------*/
 
 const login = async (req, res) => {
-  let user = req.user;
-  delete user.token;
-  delete user.password;
-
-  let newJWT = await generateJWT(user);
-  await UserModel.update(
-    {
-      token: newJWT.token,
+  let user = await UserModel.findOne({
+    where: {
+      email: { [Op.iLike]: req.body.email },
+      password: req.body.password,
     },
-    { where: { id: user.id } }
-  );
-  res.status(200).json(newJWT);
+  });
+
+  if (user) {
+    user = user.toJSON();
+
+    delete user.token;
+    delete user.password;
+
+    let newJWT = await generateJWT(user);
+    await UserModel.update(
+      {
+        token: newJWT.token,
+      },
+      { where: { id: user.id } }
+    );
+    res.status(200).json(newJWT);
+  }
 };
 
 const logout = async (req, res) => {
