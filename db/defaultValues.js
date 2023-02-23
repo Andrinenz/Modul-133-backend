@@ -9,7 +9,7 @@ import UserModel from './models/user-model.js';
 /*-------------------------------------------------------------*/
 
 const defaultUser = {
-  email: 'test@tbz.com',
+  email: 'test@tbz.ch',
   isAdmin: true,
   firstname: 'Test',
   lastname: 'TBZ',

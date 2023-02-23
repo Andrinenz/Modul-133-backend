@@ -7,6 +7,7 @@ import itemRouter from './api/item.js';
 import orderRouter from './api/order.js';
 import ratingRouter from './api/review.js';
 import userRouter from './api/user.js';
+import cardRouter from './api/card.js';
 import passport from '../auth/passport-jwt.js';
 
 /*-------------------------------------------------------------*/
@@ -42,6 +43,12 @@ const init = (app) => {
     '/api/user',
     passport.authenticate('jwt', { session: false }),
     userRouter
+  );
+
+  app.use(
+    '/api/card',
+    passport.authenticate('jwt', { session: false }),
+    cardRouter
   );
 };
 
