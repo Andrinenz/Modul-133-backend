@@ -23,6 +23,22 @@ const getItems = async (req, res) => {
   }
 };
 
+const getItemById = async (req, res) => {
+  try {
+    let item = await ItemModel.findOne({
+      where: { id: req.query.id },
+    });
+
+    if (!item) {
+      return res.status(400).json({ error: 'Not order with this id found' });
+    }
+
+    res.status(200).json({ result: item });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 const createItem = async (req, res) => {
   try {
     let data = { ...req.body };
@@ -73,4 +89,4 @@ const deleteById = async (req, res) => {
 /*-------------------------------------------------------------*/
 /*EXPORTS*/
 /*-------------------------------------------------------------*/
-export default { getItems, createItem, deleteById, updateById };
+export default { getItems, createItem, getItemById, deleteById, updateById };

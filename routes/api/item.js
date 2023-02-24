@@ -25,6 +25,15 @@ router.get(
   controller.getItems
 );
 
+router.get(
+  '/getItemById',
+  validate({
+    query: Joi.object({
+      id: Joi.number().required(),
+    }),
+  })
+);
+
 router.post(
   '/createItem',
   validate({
