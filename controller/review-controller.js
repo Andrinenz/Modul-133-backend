@@ -30,7 +30,7 @@ const getAllRatings = async (req, res) => {
 const getRatingsByUserId = async (req, res) => {
   try {
     let ratings = await ReviewModel.findAll({
-      where: { id: req.query.id },
+      where: { UserId: req.query.id },
       include: [ItemModel, models.userModel],
     });
 
