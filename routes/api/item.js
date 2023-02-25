@@ -56,6 +56,7 @@ router.patch(
       image: Joi.string(),
       title: Joi.string(),
       price: Joi.string(),
+      size: Joi.string().required(),
       description: Joi.string(),
       itemsInStock: Joi.string(),
     }),
