@@ -38,6 +38,10 @@ ItemModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    isArchived: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     description: {
       type: DataTypes.STRING,
       allowNull: true,
