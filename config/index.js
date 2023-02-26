@@ -20,6 +20,14 @@ const {
   DB_BASE64,
 } = process.env;
 
+const {
+  FILEUPLOAD_ENDPOINT,
+  FILEUPLOAD_APIKEYID,
+  FILEUPLOAD_SERVICEINSTANCEID,
+  FILEUPLOAD_SIGNATUREVERSION,
+  FILEUPLOAD_BUCKETNAME,
+} = process.env;
+
 const { SECRET_JWT, SECRET_SESSION } = process.env;
 
 const { PORT } = process.env;
@@ -49,6 +57,13 @@ const config = {
   secretKeys: {
     jwtSecret: SECRET_JWT,
     expressSessionSecret: SECRET_SESSION,
+  },
+  fileupload: {
+    endpoint: FILEUPLOAD_ENDPOINT,
+    apiKeyId: FILEUPLOAD_APIKEYID,
+    serviceInstanceId: FILEUPLOAD_SERVICEINSTANCEID,
+    signatureVersion: FILEUPLOAD_SIGNATUREVERSION,
+    bucketName: FILEUPLOAD_BUCKETNAME,
   },
 };
 
