@@ -30,7 +30,6 @@ const login = async (req, res) => {
     user = user.toJSON();
 
     delete user.token;
-    delete user.password;
 
     let newJWT = await generateJWT(user);
     await UserModel.update(
