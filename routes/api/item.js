@@ -43,6 +43,7 @@ router.post(
       price: Joi.string().required(),
       description: Joi.string(),
       isArchived: Joi.boolean().required(),
+      size: Joi.string().required(),
       itemsInStock: Joi.string().required(),
     }),
   }),
