@@ -3,6 +3,7 @@
 /*-------------------------------------------------------------*/
 
 import UserModel from '../db/models/user-model.js';
+import generateJWT from '../services/generateJWT.js';
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -28,7 +29,20 @@ const createUser = async (req, res) => {
 
     let user = await UserModel.create(data);
 
-    res.status(201).json({ result: user });
+    let newUser = user.toJSON();
+
+    delete newUser.token;
+
+    let newJWT = await generateJWT(newUser);
+
+    await UserModel.update(
+      {
+        token: newJWT.token,
+      },
+      { where: { id: user.id } }
+    );
+
+    res.status(201).json(newJWT);
   } catch (err) {
     res.status(500).json({ error: err });
   }

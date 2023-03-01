@@ -52,7 +52,32 @@ const logout = async (req, res) => {
   }
 };
 
+const createUser = async (req, res) => {
+  try {
+    let data = { ...req.body };
+
+    let user = await UserModel.create(data);
+
+    let newUser = user.toJSON();
+
+    delete newUser.token;
+
+    let newJWT = await generateJWT(newUser);
+
+    await UserModel.update(
+      {
+        token: newJWT.token,
+      },
+      { where: { id: user.id } }
+    );
+
+    res.status(201).json(newJWT);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 /*-------------------------------------------------------------*/
 /*EXPORTS*/
 /*-------------------------------------------------------------*/
-export default { logout, login };
+export default { logout, login, createUser };
