@@ -47,7 +47,7 @@ const init = (app) => {
   );
 
   app.use(
-    '/api/file',
+    '/api/files',
     passport.authenticate('jwt', { session: false }),
     fileRouter
   );

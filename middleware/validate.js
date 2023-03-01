@@ -26,6 +26,19 @@ export default (schema) => {
         }
       }
     }
+    if (schema.files) {
+      let validation = schema.files.validate(files);
+      if (validation.error) {
+        try {
+          return res
+            .status(400)
+            .json({ error: validation.error.details[0].message });
+        } catch (e) {
+          return res.status(400).json({ error: 'Invalide parameters' });
+        }
+      }
+    }
+
     next();
   };
 };
