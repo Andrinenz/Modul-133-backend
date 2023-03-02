@@ -25,20 +25,6 @@ router.get(
   controller.getUsers
 );
 
-router.post(
-  '/createUser',
-  validate({
-    body: Joi.object({
-      email: Joi.string().required(),
-      firstname: Joi.string().required(),
-      lastname: Joi.string().required(),
-      isAdmin: Joi.boolean(),
-      password: Joi.string().required(),
-    }),
-  }),
-  controller.createUser
-);
-
 router.patch(
   '/updateById',
   validate({
