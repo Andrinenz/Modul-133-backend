@@ -59,7 +59,7 @@ router.patch(
       apartementNumber: Joi.string(),
       country: Joi.string(),
       cardNumber: Joi.string(),
-      state: Joi.string().required(),
+      state: Joi.string(),
       cardHolder: Joi.string(),
       plz: Joi.string(),
       totalAmount: Joi.string(),
