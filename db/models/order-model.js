@@ -66,6 +66,10 @@ OrderModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     totalAmount: {
       type: DataTypes.STRING,
       allowNull: false,
