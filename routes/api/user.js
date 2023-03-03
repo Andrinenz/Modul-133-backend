@@ -32,6 +32,7 @@ router.patch(
       id: Joi.number().required(),
       firstname: Joi.string(),
       lastname: Joi.string(),
+      email: Joi.string(),
       isAdmin: Joi.boolean(),
     }),
   }),
