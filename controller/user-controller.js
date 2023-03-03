@@ -15,7 +15,9 @@ import generateJWT from '../services/generateJWT.js';
 
 const getUsers = async (req, res) => {
   try {
-    let users = UserModel.findAll({});
+    let users = await UserModel.findAll({
+      attributes: { exclude: ['password', 'token'] },
+    });
 
     res.status(200).json({ result: users });
   } catch (err) {
