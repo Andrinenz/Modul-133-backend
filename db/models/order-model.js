@@ -66,6 +66,10 @@ OrderModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    totalAmount: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,
