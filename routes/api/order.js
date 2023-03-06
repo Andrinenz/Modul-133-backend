@@ -41,7 +41,8 @@ router.post(
       cardHolder: Joi.string().required(),
       totalAmount: Joi.string().required(),
       sentToShippingCompany: Joi.boolean().required(),
-      ItemId: Joi.number().required(),
+      UserId: Joi.number().required(),
+      Items: Joi.array().items(Joi.number()).required(),
     }),
   }),
   controller.createOrder

@@ -5,7 +5,6 @@
 import { DataTypes, Model } from 'sequelize';
 
 import sequelize from '../sequelize.js';
-import ItemModel from './item-model.js';
 import UserModel from './user-model.js';
 
 /*-------------------------------------------------------------*/
@@ -79,14 +78,6 @@ OrderModel.init(
       allowNull: false,
       references: {
         model: UserModel,
-        key: 'id',
-      },
-    },
-    ItemId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: ItemModel,
         key: 'id',
       },
     },

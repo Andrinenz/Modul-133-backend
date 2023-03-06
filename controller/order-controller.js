@@ -4,6 +4,7 @@
 
 import ItemModel from '../db/models/item-model.js';
 import OrderModel from '../db/models/order-model.js';
+import ConnectUserOrder from '../db/models/connectUserOrder-modal.js';
 import { models } from '../db/associations.js';
 
 /*-------------------------------------------------------------*/
@@ -19,7 +20,7 @@ const getAllOrders = async (req, res) => {
     let orders = [];
 
     orders = await OrderModel.findAll({
-      include: [ItemModel, models.userModel],
+      include: [models.userModel, ItemModel],
     });
 
     res.status(200).json({ result: orders });
@@ -32,7 +33,7 @@ const getOrderById = async (req, res) => {
   try {
     let order = await OrderModel.findOne({
       where: { id: req.query.id },
-      include: [models.userModel, ItemModel],
+      include: [models.userModel],
     });
 
     if (!order) {
@@ -47,19 +48,18 @@ const getOrderById = async (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
-    let data = { ...req.body, UserId: req.user.id };
+    // let data = { ...req.body, UserId: req.user.id };
+    let { Items: items, ...body } = req.body;
 
-    let order = await OrderModel.create(data, {
-      include: [models.userModel, ItemModel],
-    });
+    let order = await OrderModel.create(body);
 
-    let orderWithUser = await OrderModel.findOne({
-      where: { id: order.id },
-      include: [models.userModel, ItemModel],
-    });
+    await ConnectUserOrder.bulkCreate(
+      items.map((item) => ({ OrderId: order.id, ItemId: item }))
+    );
 
-    res.status(201).json({ result: orderWithUser });
+    res.status(201).json({ ...order.toJSON() });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err });
   }
 };
