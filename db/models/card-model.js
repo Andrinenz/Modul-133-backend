@@ -34,6 +34,11 @@ CardModel.init(
         key: 'id',
       },
     },
+    itemCount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
+    },
     UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,

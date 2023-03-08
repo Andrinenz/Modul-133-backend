@@ -29,6 +29,7 @@ router.post(
   '/createCard',
   validate({
     body: Joi.object({
+      itemCount: Joi.number(),
       ItemId: Joi.number().required(),
     }),
   }),

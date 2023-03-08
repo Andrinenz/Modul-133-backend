@@ -49,6 +49,14 @@ OrderModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    paymentMethod: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    cvv: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     plz: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -59,11 +67,11 @@ OrderModel.init(
     },
     cardHolder: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     cardNumber: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     state: {
       type: DataTypes.STRING,

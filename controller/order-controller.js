@@ -2,10 +2,11 @@
 /*IMPORTS*/
 /*-------------------------------------------------------------*/
 
-import ItemModel from '../db/models/item-model.js';
 import OrderModel from '../db/models/order-model.js';
+import CardModel from '../db/models/card-model.js';
 import ConnectUserOrder from '../db/models/connectUserOrder-modal.js';
 import { models } from '../db/associations.js';
+import ItemModel from '../db/models/item-model.js';
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -20,11 +21,12 @@ const getAllOrders = async (req, res) => {
     let orders = [];
 
     orders = await OrderModel.findAll({
-      include: [models.userModel, ItemModel],
+      include: [{ model: CardModel, include: [ItemModel, models.userModel] }],
     });
 
     res.status(200).json({ result: orders });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err });
   }
 };
@@ -49,12 +51,12 @@ const getOrderById = async (req, res) => {
 const createOrder = async (req, res) => {
   try {
     // let data = { ...req.body, UserId: req.user.id };
-    let { Items: items, ...body } = req.body;
+    let { Cards: cards, ...body } = req.body;
 
     let order = await OrderModel.create(body);
 
     await ConnectUserOrder.bulkCreate(
-      items.map((item) => ({ OrderId: order.id, ItemId: item }))
+      cards.map((item) => ({ OrderId: order.id, CardId: item }))
     );
 
     res.status(201).json({ ...order.toJSON() });

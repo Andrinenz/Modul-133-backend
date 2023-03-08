@@ -7,6 +7,7 @@ import ItemModel from './item-model.js';
 import OrderModel from './order-model.js';
 import UserModel from './user-model.js';
 import sequelize from '../sequelize.js';
+import CardModel from './card-model.js';
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -26,11 +27,11 @@ ConnectUserOrder.init(
       primaryKey: true,
       allowNull: false,
     },
-    ItemId: {
+    CardId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: ItemModel,
+        model: CardModel,
         key: 'id',
       },
     },
@@ -46,8 +47,8 @@ ConnectUserOrder.init(
   {
     sequelize,
     freezeTableName: true,
-    modelName: 'ConnectItems',
-    tableName: 'ConnectItems',
+    modelName: 'ConnectCards',
+    tableName: 'ConnectCards',
   }
 );
 

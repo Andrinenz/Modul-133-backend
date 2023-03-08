@@ -30,9 +30,6 @@ ReviewModel.belongsTo(ItemModel);
 ItemModel.hasMany(CardModel);
 CardModel.belongsTo(ItemModel);
 
-/* ItemModel.hasMany(OrderModel);
-OrderModel.belongsTo(ItemModel); */
-
 UserModel.hasMany(ReviewModel);
 ReviewModel.belongsTo(UserModel);
 
@@ -42,8 +39,14 @@ CardModel.belongsTo(UserModel);
 UserModel.hasMany(OrderModel);
 OrderModel.belongsTo(UserModel);
 
-ItemModel.belongsToMany(OrderModel, { through: ConnectUserOrder });
-OrderModel.belongsToMany(ItemModel, { through: ConnectUserOrder });
+CardModel.belongsToMany(OrderModel, {
+  through: ConnectUserOrder,
+  include: [ItemModel, models.userModel],
+});
+OrderModel.belongsToMany(CardModel, {
+  through: ConnectUserOrder,
+  include: [ItemModel, models.userModel],
+});
 
 /*-------------------------------------------------------------*/
 /*EXPORTS*/
