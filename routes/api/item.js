@@ -58,7 +58,7 @@ router.patch(
       image: Joi.string(),
       title: Joi.string(),
       price: Joi.string(),
-      size: Joi.string().required(),
+      size: Joi.string(),
       description: Joi.string(),
       isArchived: Joi.boolean(),
       itemsInStock: Joi.string(),
