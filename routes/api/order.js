@@ -31,7 +31,7 @@ router.post(
     body: Joi.object({
       firstname: Joi.string().required(),
       lastname: Joi.string().required(),
-      email: Joi.string(),
+      email: Joi.string().required(),
       address: Joi.string().required(),
       apartementNumber: Joi.string().required(),
       country: Joi.string().required(),

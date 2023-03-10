@@ -36,7 +36,7 @@ router.post(
   controller.createCard
 );
 
-router.patch(
+router.delete(
   '/deleteCard',
   validate({
     body: Joi.object({

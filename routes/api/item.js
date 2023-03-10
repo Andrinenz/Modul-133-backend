@@ -31,7 +31,8 @@ router.get(
     query: Joi.object({
       id: Joi.number().required(),
     }),
-  })
+  }),
+  controller.getItemById
 );
 
 router.post(
