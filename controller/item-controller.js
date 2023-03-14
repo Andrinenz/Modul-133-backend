@@ -30,7 +30,7 @@ const getItemById = async (req, res) => {
     });
 
     if (!item) {
-      return res.status(400).json({ error: 'Not order with this id found' });
+      return res.status(400).json({ error: 'Not item with this id found' });
     }
 
     res.status(200).json({ result: item });
