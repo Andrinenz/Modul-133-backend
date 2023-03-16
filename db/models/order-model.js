@@ -49,6 +49,10 @@ OrderModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     paymentMethod: {
       type: DataTypes.STRING,
       allowNull: false,
