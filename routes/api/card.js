@@ -36,6 +36,18 @@ router.post(
   controller.createCard
 );
 
+router.patch(
+  '/updateCardById',
+  validate({
+    body: Joi.object({
+      id: Joi.number().required(),
+      itemCount: Joi.number(),
+      isArchived: Joi.boolean(),
+    }),
+  }),
+  controller.updateCard
+);
+
 router.delete(
   '/deleteCard',
   validate({

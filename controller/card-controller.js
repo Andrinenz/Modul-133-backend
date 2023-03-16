@@ -49,6 +49,24 @@ const createCard = async (req, res) => {
   }
 };
 
+const updateCard = async (req, res) => {
+  let cardUpadte = await CardModel.update(
+    { ...req.body },
+    {
+      where: { id: req.body.id },
+    }
+  );
+
+  if (cardUpadte[0] === 0) {
+    return res.status(400).json({ error: 'Please enter a valid Id' });
+  }
+  try {
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 const deleteCard = async (req, res) => {
   try {
     let deleteCardCount = await CardModel.destroy({
@@ -67,4 +85,4 @@ const deleteCard = async (req, res) => {
 /*-------------------------------------------------------------*/
 /*EXPORTS*/
 /*-------------------------------------------------------------*/
-export default { deleteCard, createCard, getCardFromUser };
+export default { deleteCard, createCard, getCardFromUser, updateCard };

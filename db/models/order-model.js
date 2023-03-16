@@ -53,6 +53,10 @@ OrderModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    cardExpiryDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
     paymentMethod: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -68,6 +72,7 @@ OrderModel.init(
     sentToShippingCompany: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
     cardHolder: {
       type: DataTypes.STRING,
