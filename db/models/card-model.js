@@ -34,6 +34,11 @@ CardModel.init(
         key: 'id',
       },
     },
+    isArchived: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     itemCount: {
       type: DataTypes.INTEGER,
       allowNull: false,
