@@ -61,6 +61,10 @@ OrderModel.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    cardCompany: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     cvv: {
       type: DataTypes.STRING,
       allowNull: true,
