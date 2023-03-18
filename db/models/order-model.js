@@ -65,7 +65,7 @@ OrderModel.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    cvv: {
+    cvc: {
       type: DataTypes.STRING,
       allowNull: true,
     },
