@@ -42,6 +42,7 @@ router.post(
       cardNumber: Joi.string(),
       cardHolder: Joi.string(),
       cardCompany: Joi.string(),
+      cardExpiryDate: Joi.string(),
       totalAmount: Joi.string().required(),
       paymentMethod: Joi.string().required(),
       sentToShippingCompany: Joi.boolean().required(),

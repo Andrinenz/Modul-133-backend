@@ -55,9 +55,17 @@ const createOrder = async (req, res) => {
 
     let order = await OrderModel.create(body);
 
+    let selectedCards = cards;
+
     await ConnectUserOrder.bulkCreate(
       cards.map((item) => ({ OrderId: order.id, CardId: item }))
     );
+
+    selectedCards.forEach(async (id) => {
+      await CardModel.findOne({
+        where: { id: id },
+      }).then((selectedCard) => selectedCard.update({ isArchived: true }));
+    });
 
     res.status(201).json({ ...order.toJSON() });
   } catch (err) {

@@ -19,7 +19,7 @@ const getCardFromUser = async (req, res) => {
     let user = req.user;
 
     let card = await CardModel.findAll({
-      where: { UserId: user.id },
+      where: { UserId: user.id, isArchived: false },
       include: [ItemModel, models.userModel],
     });
 
