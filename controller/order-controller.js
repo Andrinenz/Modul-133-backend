@@ -31,11 +31,24 @@ const getAllOrders = async (req, res) => {
   }
 };
 
+const getOrdersFromUser = async (req, res) => {
+  try {
+    let order = await OrderModel.findAll({
+      where: { UserId: req.user.id },
+      include: [{ model: CardModel, include: [ItemModel, models.userModel] }],
+    });
+
+    res.status(200).json({ result: order });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 const getOrderById = async (req, res) => {
   try {
     let order = await OrderModel.findOne({
       where: { id: req.query.id },
-      include: [models.userModel],
+      include: [{ model: CardModel, include: [ItemModel, models.userModel] }],
     });
 
     if (!order) {
@@ -116,4 +129,5 @@ export default {
   updateOrderById,
   deleteOrder,
   getOrderById,
+  getOrdersFromUser,
 };

@@ -25,6 +25,14 @@ router.get(
   controller.getAllOrders
 );
 
+router.get(
+  '/ordersFromUser',
+  validate({
+    query: Joi.object(),
+  }),
+  controller.getOrdersFromUser
+);
+
 router.post(
   '/createOrder',
   validate({
@@ -36,7 +44,7 @@ router.post(
       apartementNumber: Joi.string().required(),
       country: Joi.string().required(),
       plz: Joi.string().required(),
-      city: Joi.string().required(),
+      city: Joi.string(),
       state: Joi.string().required(),
       cvc: Joi.string(),
       cardNumber: Joi.string(),
