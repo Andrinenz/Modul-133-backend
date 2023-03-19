@@ -30,6 +30,7 @@ router.post(
   validate({
     body: Joi.object({
       itemCount: Joi.number(),
+      choosedSize: Joi.string(),
       ItemId: Joi.number().required(),
     }),
   }),
@@ -42,6 +43,7 @@ router.patch(
     body: Joi.object({
       id: Joi.number().required(),
       itemCount: Joi.number(),
+      choosedSize: Joi.string(),
       isArchived: Joi.boolean(),
     }),
   }),
