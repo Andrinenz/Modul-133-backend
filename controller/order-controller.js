@@ -77,7 +77,27 @@ const createOrder = async (req, res) => {
     selectedCards.forEach(async (id) => {
       await CardModel.findOne({
         where: { id: id },
-      }).then((selectedCard) => selectedCard.update({ isArchived: true }));
+      }).then((selectedCard1) => selectedCard1.update({ isArchived: true }));
+
+      let selectedCard = await CardModel.findOne({
+        where: { id: id },
+      });
+
+      selectedCard = selectedCard.toJSON();
+
+      let item = await ItemModel.findOne({
+        where: { id: selectedCard.ItemId },
+      });
+
+      item = item.toJSON();
+
+      let updatedItemStock =
+        parseInt(item?.itemsInStock) - selectedCard?.itemCount;
+
+      await ItemModel.update(
+        { itemsInStock: updatedItemStock.toString() },
+        { where: { id: selectedCard.ItemId } }
+      );
     });
 
     res.status(201).json({ ...order.toJSON() });
