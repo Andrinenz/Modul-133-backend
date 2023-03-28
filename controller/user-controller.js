@@ -3,7 +3,6 @@
 /*-------------------------------------------------------------*/
 
 import UserModel from '../db/models/user-model.js';
-import generateJWT from '../services/generateJWT.js';
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/

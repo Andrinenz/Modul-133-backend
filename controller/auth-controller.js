@@ -5,6 +5,7 @@
 import { Op } from 'sequelize';
 import UserModel from '../db/models/user-model.js';
 import generateJWT from '../services/generateJWT.js';
+import bcrypt from 'bcrypt';
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -42,21 +43,18 @@ const login = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
-  try {
-    await UserModel.update({ token: null }, { where: { id: req.user.id } });
-    res.sendStatus(200);
-  } catch (err) {
-    res.status(500).json({ error: err });
-    console.log(err);
-  }
-};
-
 const createUser = async (req, res) => {
   try {
     let data = { ...req.body };
 
-    let user = await UserModel.create(data);
+    const hash = bcrypt.hash(data.password, 10);
+
+    let user = await UserModel.create({
+      email: data.email,
+      password: hash,
+      firstname: data.firstname,
+      lastname: data.lastname,
+    });
 
     let newUser = user.toJSON();
 
@@ -74,6 +72,16 @@ const createUser = async (req, res) => {
     res.status(201).json(newJWT);
   } catch (err) {
     res.status(500).json({ error: err });
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    await UserModel.update({ token: null }, { where: { id: req.user.id } });
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err });
+    console.log(err);
   }
 };
 
