@@ -2,10 +2,10 @@
 /*IMPORTS*/
 /*-------------------------------------------------------------*/
 
-import { Strategy as LocalStrategy } from 'passport-local';
-import UserModel from '../db/models/user-model.js';
-import passport from 'passport';
-import { Op } from 'sequelize';
+import { Strategy as LocalStrategy } from "passport-local";
+import UserModel from "../db/models/user-model.js";
+import passport from "passport";
+import { Op } from "sequelize";
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -18,19 +18,18 @@ import { Op } from 'sequelize';
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'email',
-      passwordField: 'password',
+      usernameField: "email",
       session: false,
     },
     async (email, password, done) => {
       let user = await UserModel.findOne({
-        where: { email: { [Op.iLike]: email }, password: password },
+        where: { email: { [Op.iLike]: email } },
       });
       if (user !== null) {
         user = user.toJSON();
         return done(null, user);
       }
-      return done(null, false, { message: 'Password or Mail incorrect' });
+      return done(null, false, { message: "Password or Mail incorrect" });
     }
   )
 );

@@ -2,10 +2,10 @@
 /*IMPORTS*/
 /*-------------------------------------------------------------*/
 
-import { Op } from 'sequelize';
-import UserModel from '../db/models/user-model.js';
-import generateJWT from '../services/generateJWT.js';
-import bcrypt from 'bcrypt';
+import { Op } from "sequelize";
+import UserModel from "../db/models/user-model.js";
+import generateJWT from "../services/generateJWT.js";
+import bcrypt from "bcrypt";
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -16,30 +16,38 @@ import bcrypt from 'bcrypt';
 /*-------------------------------------------------------------*/
 
 const login = async (req, res) => {
-  let user = await UserModel.findOne({
-    where: {
-      email: { [Op.iLike]: req.body.email },
-      password: req.body.password,
-    },
-  });
+  try {
+    const { email, password } = req.body;
+    let user = await UserModel.findOne({
+      where: {
+        email: { [Op.iLike]: email },
+      },
+    });
 
-  if (!user) {
-    return res.status(401).json({ message: 'Invalid email or password' });
-  }
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
 
-  if (user) {
     user = user.toJSON();
 
-    delete user.token;
+    const validPass = await bcrypt.compare(password, user.password);
 
-    let newJWT = await generateJWT(user);
-    await UserModel.update(
-      {
-        token: newJWT.token,
-      },
-      { where: { id: user.id } }
-    );
-    res.status(200).json(newJWT);
+    if (validPass) {
+      delete user.token;
+
+      let newJWT = await generateJWT(user);
+      await UserModel.update(
+        {
+          token: newJWT.token,
+        },
+        { where: { id: user.id } }
+      );
+      res.status(200).json(newJWT);
+    } else {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid email or password" });
   }
 };
 
@@ -47,7 +55,7 @@ const createUser = async (req, res) => {
   try {
     let data = { ...req.body };
 
-    const hash = bcrypt.hash(data.password, 10);
+    const hash = await bcrypt.hash(data.password, 10);
 
     let user = await UserModel.create({
       email: data.email,
@@ -71,6 +79,7 @@ const createUser = async (req, res) => {
 
     res.status(201).json(newJWT);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err });
   }
 };
