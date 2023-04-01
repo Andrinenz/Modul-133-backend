@@ -24,6 +24,23 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  try {
+    let user = await UserModel.findOne({
+      attributes: { exclude: ['password', 'token'] },
+      where: { id: req.query.id },
+    });
+
+    if (!order) {
+      return res.status(400).json({ error: 'Not user found with this id' });
+    }
+
+    res.status(200).json({ result: user });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 const updateUser = async (req, res) => {
   let userUpdate = await UserModel.update(
     { ...req.body },
@@ -58,4 +75,4 @@ const deleteUser = async (req, res) => {
 /*-------------------------------------------------------------*/
 /*EXPORTS*/
 /*-------------------------------------------------------------*/
-export default { getUsers, updateUser, deleteUser };
+export default { getUsers, updateUser, deleteUser, getUserById };

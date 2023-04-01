@@ -39,6 +39,16 @@ router.patch(
   controller.updateUser
 );
 
+router.get(
+  'userById',
+  validate({
+    query: Joi.object({
+      id: Joi.number().required(),
+    }),
+  }),
+  controller.getUserById
+);
+
 router.delete(
   '/deleteUser',
   validate({
