@@ -40,7 +40,7 @@ router.patch(
 );
 
 router.get(
-  'userById',
+  '/getUserById',
   validate({
     query: Joi.object({
       id: Joi.number().required(),

@@ -31,12 +31,13 @@ const getUserById = async (req, res) => {
       where: { id: req.query.id },
     });
 
-    if (!order) {
+    if (!user) {
       return res.status(400).json({ error: 'Not user found with this id' });
     }
 
     res.status(200).json({ result: user });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err });
   }
 };
