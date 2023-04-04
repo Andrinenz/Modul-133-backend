@@ -2,9 +2,9 @@
 /*IMPORTS*/
 /*-------------------------------------------------------------*/
 
-import { models } from '../db/associations.js';
-import CardModel from '../db/models/card-model.js';
-import ItemModel from '../db/models/item-model.js';
+import { models } from "../db/associations.js";
+import CardModel from "../db/models/card-model.js";
+import ItemModel from "../db/models/item-model.js";
 
 /*-------------------------------------------------------------*/
 /*DECLARATION AND INITIALIZATION*/
@@ -34,6 +34,18 @@ const createCard = async (req, res) => {
   try {
     let data = { ...req.body, UserId: req.user.id };
 
+    let dublicatedCard = await CardModel.findOne({
+      where: { ItemId: data.ItemId, choosedSize: data.choosedSize },
+    });
+
+    if (dublicatedCard) {
+      const cardJson = dublicatedCard.toJSON();
+      dublicatedCard.update({
+        itemCount: cardJson?.itemCount + data?.itemCount,
+      });
+      return res.sendStatus(200);
+    }
+
     let card = await CardModel.create(data, {
       include: [ItemModel, models.userModel],
     });
@@ -58,7 +70,7 @@ const updateCard = async (req, res) => {
   );
 
   if (cardUpadte[0] === 0) {
-    return res.status(400).json({ error: 'Please enter a valid Id' });
+    return res.status(400).json({ error: "Please enter a valid Id" });
   }
   try {
     res.sendStatus(200);
@@ -76,7 +88,7 @@ const deleteCard = async (req, res) => {
     if (deleteCardCount === 1) {
       return res.sendStatus(200);
     }
-    res.status(400).json({ error: 'Id not found' });
+    res.status(400).json({ error: "Id not found" });
   } catch (err) {
     res.status(500).json({ error: err });
   }
