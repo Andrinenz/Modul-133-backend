@@ -66,7 +66,12 @@ const createOrder = async (req, res) => {
     // let data = { ...req.body, UserId: req.user.id };
     let { Cards: cards, ...body } = req.body;
 
-    let order = await OrderModel.create(body);
+    let newTotalAmount = parseInt(req.body.totalAmount) + 25;
+
+    let order = await OrderModel.create({
+      ...body,
+      totalAmount: newTotalAmount.toString(),
+    });
 
     let selectedCards = cards;
 
