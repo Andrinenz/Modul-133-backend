@@ -26,6 +26,16 @@ router.get(
 );
 
 router.get(
+  '/ratingByItem',
+  validate({
+    query: Joi.object({
+      id: Joi.number().required(),
+    }),
+  }),
+  controller.getRatingByItem
+);
+
+router.get(
   '/ratingByUser',
   validate({
     query: Joi.object({

@@ -27,6 +27,23 @@ const getAllRatings = async (req, res) => {
   }
 };
 
+const getRatingByItem = async (req, res) => {
+  try {
+    let ratings = await ReviewModel.findAll({
+      where: { ItemId: req.query.id },
+      include: [ItemModel, models.userModel],
+    });
+
+    if (!ratings) {
+      return res.status(400).json({ error: 'Not rating with this id found' });
+    }
+
+    res.status(200).json({ result: ratings });
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 const getRatingsByUserId = async (req, res) => {
   try {
     let ratings = await ReviewModel.findAll({
@@ -104,5 +121,6 @@ export default {
   deleteRating,
   updateRatingById,
   getAllRatings,
+  getRatingByItem,
   getRatingsByUserId,
 };
